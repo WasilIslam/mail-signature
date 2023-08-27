@@ -1,0 +1,23 @@
+.container {
+  padding: 20px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.options button {
+  margin-right: 10px;
+}
+
+.options button.active {
+  background-color: #ddd;
+}
+
+.editor {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
