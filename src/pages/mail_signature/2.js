@@ -4,16 +4,17 @@ import styles from "@/styles/Mail.module.css";
 const basicFonts = [
   "Arial",
   "Helvetica",
-  "Verdana",
-  "Tahoma",
-  "Trebuchet MS",
   "Times New Roman",
-  "Georgia",
   "Courier New",
-  "Lucida Console",
+  "Verdana",
+  "Georgia",
+  "Palatino",
+  "Garamond",
+  "Bookman",
+  "Comic Sans MS",
 ];
 
-export default function Home() {
+export default function Two({ content }) {
   const editorRef = useRef(null);
   const [color, setColor] = useState("");
   const [font, setFont] = useState("Arial");
@@ -27,6 +28,9 @@ export default function Home() {
       editorRef.current.innerHTML = savedContent;
     }
   }, []);
+  useEffect(() => {
+    if (content) editorRef.current.innerHTML = content;
+  }, [content]);
 
   const handleBold = () => {
     editorRef.current.focus();

@@ -4,6 +4,7 @@ import { CopyOutlined, DownloadOutlined } from "@ant-design/icons";
 import { card1 } from "./cards/cards";
 import { copyRichText, copyTextToClipboard } from "@/functions/clipboard";
 import { captureAndDownloadElementById } from "@/functions/2image";
+import Two from "./2";
 
 function DynamicInputs() {
   const initialInputList = {
@@ -17,6 +18,7 @@ function DynamicInputs() {
   const [inputFile, setInputFile] = useState(null);
   const [inputList, setInputList] = useState(initialInputList);
   const [formData, setFormData] = useState({});
+  const [content, setContent] = useState(null);
 
   const handleInputChange = (label, event) => {
     const newList = { ...inputList };
@@ -67,6 +69,12 @@ function DynamicInputs() {
   };
 
   useEffect(() => {
+    setContent(
+      card1({
+        ...inputList,
+        "Profile Pic": { value: inputFile },
+      })
+    );
     document.getElementById("card").innerHTML = card1({
       ...inputList,
       "Profile Pic": { value: inputFile },
@@ -118,7 +126,8 @@ function DynamicInputs() {
         }
       >
         {/* Content of the card */}
-        <div id="card"></div>
+        <div id="card" style={{ display: "none" }}></div>
+        <Two content={content} />
       </Card>
     </div>
   );
