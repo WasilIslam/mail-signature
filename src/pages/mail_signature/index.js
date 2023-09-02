@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input, Button, Card, Row, Col } from "antd";
 import { CopyOutlined, DownloadOutlined } from "@ant-design/icons";
-import { card1 } from "./cards/cards";
+import { card1 } from "../../functions/cards/cards";
 import { copyRichText, copyTextToClipboard } from "@/functions/clipboard";
 import { captureAndDownloadElementById } from "@/functions/2image";
 import Two from "./2";
