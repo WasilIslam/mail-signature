@@ -156,6 +156,14 @@ style="
                                     ></span
                                   >
                                 </p>
+                                <span
+                                style="
+                                font-size: 11px;
+                                color: rgb(33, 33, 33);
+                              "
+                                >
+                                ${data["Address"].value}
+                                </span>
                               </td>
                             </tr>
                           </tbody>
