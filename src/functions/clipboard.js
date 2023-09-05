@@ -9,6 +9,7 @@ export function copyTextToClipboard(text) {
 
 export function copyRichText(elementId) {
   // Find the element with the provided ID
+  console.log(elementId);
   const element = document.getElementById(elementId);
 
   // Create a range and select the content of the element

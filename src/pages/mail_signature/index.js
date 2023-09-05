@@ -126,8 +126,10 @@ function DynamicInputs() {
         }
       >
         {/* Content of the card */}
-        <div id="card" style={{ display: "none" }}></div>
         <Two content={content} />
+        <hr />
+        <b>Final Output</b>
+        <div id="card"></div>
       </Card>
     </div>
   );
