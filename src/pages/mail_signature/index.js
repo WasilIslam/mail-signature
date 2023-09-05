@@ -37,7 +37,7 @@ function DynamicInputs() {
 
   const handleRemoveInput = (label) => {
     const newInputList = { ...inputList };
-    delete newInputList[label];
+    newInputList[label].value = "";
     setInputList(newInputList);
 
     // Update formData
