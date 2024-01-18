@@ -4,9 +4,22 @@ import { CopyOutlined, DownloadOutlined } from "@ant-design/icons";
 import { card1 } from "../../functions/cards/cards";
 import { copyRichText, copyTextToClipboard } from "@/functions/clipboard";
 import { captureAndDownloadElementById } from "@/functions/2image";
-import Two from "./2";
+import Two from "./2.js";
+import { useRouter } from "next/router";
+import { useAuth } from "@/functions/contexts/userContext";
 
 function DynamicInputs() {
+
+  const router = useRouter();
+  const user = useAuth();
+ 
+  useEffect(() => {
+    if (!user.user) {
+      router.push('/');
+    }
+  }, [router, user]);
+
+
   const initialInputList = {
     "Full name": { id: 0, label: "Full name", value: "Muhammad Wasil Islam" },
     Title: { id: 1, label: "Title", value: "Software Engineer" },
@@ -81,58 +94,59 @@ function DynamicInputs() {
     });
   }, [inputList, inputFile]);
   return (
-    <div style={{ padding: "20px", display: "flex", gap: 10 }}>
-      <Card title="Your Information" style={{ width: "30%" }}>
-        <Row gutter={[16, 16]}>
+    (user.user ? <div style={{ padding: "20px", display: "flex", gap: 10 }}>
+    <Card title="Your Information" style={{ width: "30%" }}>
+      <Row gutter={[16, 16]}>
+        <Col span={18}>
+          <input type="file" onChange={handleFileChange} />
+        </Col>
+      </Row>
+      {Object.values(inputList).map((input) => (
+        <Row gutter={[16, 16]} key={input.id} style={{ marginTop: 30 }}>
           <Col span={18}>
-            <input type="file" onChange={handleFileChange} />
+            <Input
+              value={input.value}
+              onChange={(event) => handleInputChange(input.label, event)}
+              placeholder={input.label}
+            />
+          </Col>
+          <Col span={6}>
+            <Button onClick={() => handleRemoveInput(input.label)}>
+              Remove
+            </Button>
           </Col>
         </Row>
-        {Object.values(inputList).map((input) => (
-          <Row gutter={[16, 16]} key={input.id} style={{ marginTop: 30 }}>
-            <Col span={18}>
-              <Input
-                value={input.value}
-                onChange={(event) => handleInputChange(input.label, event)}
-                placeholder={input.label}
-              />
-            </Col>
-            <Col span={6}>
-              <Button onClick={() => handleRemoveInput(input.label)}>
-                Remove
-              </Button>
-            </Col>
-          </Row>
-        ))}
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            {/* <Button type="dashed" onClick={handleAddInput} block>
-              Add Input
-            </Button> */}
-          </Col>
-        </Row>
-      </Card>
-      <Card
-        title="Card"
-        extra={
-          <div>
-            <Button icon={<CopyOutlined />} onClick={handleCopy}>
-              Copy
-            </Button>
-            <Button icon={<DownloadOutlined />} onClick={handleDownload}>
-              Download
-            </Button>
-          </div>
-        }
-      >
-        {/* Content of the card */}
-        <Two content={content} />
-        <hr />
-        <b>Final Output</b>
-        <div id="card"></div>
-      </Card>
-    </div>
-  );
+      ))}
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          {/* <Button type="dashed" onClick={handleAddInput} block>
+            Add Input
+          </Button> */}
+        </Col>
+      </Row>
+    </Card>
+    <Card
+      title="Card"
+      extra={
+        <div>
+          <Button icon={<CopyOutlined />} onClick={handleCopy}>
+            Copy
+          </Button>
+          <Button icon={<DownloadOutlined />} onClick={handleDownload}>
+            Download
+          </Button>
+        </div>
+      }
+    >
+      {/* Content of the card */}
+      <Two content={content} />
+      <hr />
+      <b>Final Output</b>
+      <div id="card"></div>
+    </Card>
+  </div>
+ : "User Not Logged in"))
+    
 }
 
 export default DynamicInputs;

@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "@/styles/Mail.module.css";
+import { useAuth } from "@/functions/contexts/userContext";
+import { useRouter } from "next/router";
+import { redirect } from "next/dist/server/api-utils";
 
 const basicFonts = [
   "Arial",
@@ -15,6 +18,15 @@ const basicFonts = [
 ];
 
 export default function Two({ content }) {
+  const router = useRouter();
+  const user = useAuth();
+ 
+  useEffect(() => {
+    if (!user.user) {
+      router.push('/');
+    }
+  }, [router, user]);
+  
   const editorRef = useRef(null);
   const [color, setColor] = useState("");
   const [font, setFont] = useState("Arial");
@@ -23,9 +35,11 @@ export default function Two({ content }) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    const savedContent = localStorage.getItem("editorContent");
-    if (savedContent) {
-      editorRef.current.innerHTML = savedContent;
+    if (user.user){
+      const savedContent = localStorage.getItem("editorContent");
+      if (savedContent) {
+        editorRef.current.innerHTML = savedContent;
+      }
     }
   }, []);
   useEffect(() => {
@@ -123,7 +137,7 @@ export default function Two({ content }) {
   };
 
   return (
-    <div className={styles.container}>
+    (user.user ? <div className={styles.container}>
       <div className={styles.options}>
         <button
           className={boldActive ? styles.active : ""}
@@ -224,5 +238,6 @@ export default function Two({ content }) {
         ))}
       </div>
     </div>
+    : "-")
   );
 }
